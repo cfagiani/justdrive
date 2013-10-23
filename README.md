@@ -10,3 +10,4 @@ The app home screen is set to display even when locked and provides a button to 
 
 TODO:
  * better way of backing off in the event the user manually exits car mode (for false positives and when the user is not the driver)
+ * find reliable way to toggle GPS

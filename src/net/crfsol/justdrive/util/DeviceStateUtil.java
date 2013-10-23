@@ -1,5 +1,6 @@
 package net.crfsol.justdrive.util;
 
+import android.app.ActivityManager;
 import android.app.UiModeManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
@@ -10,10 +11,14 @@ import android.net.Uri;
 import android.os.BatteryManager;
 import android.provider.Settings;
 
+import java.util.List;
+
 /**
  * @author Christopher Fagiani
  */
 public class DeviceStateUtil {
+
+    private static final String MAPS_PACKAGE = "com.google.android.apps.maps";
 
     public static boolean isPowerConnected(Context context) {
         Intent intent = context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
@@ -46,15 +51,42 @@ public class DeviceStateUtil {
         }
     }
 
-    public static void setCarModeEnabled(Context context, boolean enabled) {
+    /**
+     * toggles car mode
+     *
+     * @param context
+     * @param enable
+     * @param alwaysActivate
+     */
+    public static void setCarModeEnabled(Context context, boolean enable, boolean alwaysActivate) {
         UiModeManager uiManager = (UiModeManager) context.getSystemService(Context.UI_MODE_SERVICE);
-        if (enabled && uiManager.getCurrentModeType() != Configuration.UI_MODE_TYPE_CAR) {
+        if (alwaysActivate || (enable && uiManager.getCurrentModeType() != Configuration.UI_MODE_TYPE_CAR)) {
             uiManager.enableCarMode(UiModeManager.MODE_NIGHT_AUTO | UiModeManager.ENABLE_CAR_MODE_GO_CAR_HOME);
-        } else if (!enabled && uiManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_DESK) {
+        } else if (!enable && uiManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_CAR) {
             uiManager.disableCarMode(UiModeManager.DISABLE_CAR_MODE_GO_HOME);
         }
     }
 
+    /**
+     * somewhat hackish method of determining if Google Maps is in the foreground.
+     * What we really want to do is detect if navigation is enabled but there is no API for that.
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isMapsInForeground(Context context) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> services = activityManager
+                .getRunningTasks(Integer.MAX_VALUE);
+        return MAPS_PACKAGE.equals(services.get(0).topActivity.getPackageName());
+    }
+
+    /**
+     * toggles a setting in the widget provider. This is a hack to bypass GPS activation restrictions and only works on older versions of Android.
+     *
+     * @param context
+     * @param position
+     */
     private static void sendToggle(Context context, String position) {
         final Intent toggle = new Intent();
         toggle.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");

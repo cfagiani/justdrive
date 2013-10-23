@@ -44,7 +44,9 @@ public class ActivityRecognitionIntentService extends IntentService {
                 writeCounterPreference(0);
                 DeviceStateUtil.setBluetoothEnabled(true);
 
-                DeviceStateUtil.setCarModeEnabled(this, true);
+                //always reactivate car mode so the home screen returns to the forefront in the event that a prior voice action launched a new activity
+                //can't always enable without exiting navigation
+                DeviceStateUtil.setCarModeEnabled(this, true, !DeviceStateUtil.isMapsInForeground(this));
 
             } else if (notInVehicle(detectedActivity)) {
                 Log.d("Activity Recognition", "Not travelling");
@@ -57,7 +59,7 @@ public class ActivityRecognitionIntentService extends IntentService {
                             //GPS doesn't work reliably
                             //DeviceStateUtil.setGPSEnabled(this, false);
                             DeviceStateUtil.setBluetoothEnabled(false);
-                            DeviceStateUtil.setCarModeEnabled(this, false);
+                            DeviceStateUtil.setCarModeEnabled(this, false, false);
                             writeTogglePreference(false);
                             writeCounterPreference(0);
                         } else {
@@ -72,8 +74,8 @@ public class ActivityRecognitionIntentService extends IntentService {
         } else {
             Log.w("Activity Recognition", "No result from detection service");
         }
-
     }
+
 
     private void writeTogglePreference(boolean val) {
         SharedPreferences.Editor prefEditor = PreferenceManager.getDefaultSharedPreferences(this).edit();

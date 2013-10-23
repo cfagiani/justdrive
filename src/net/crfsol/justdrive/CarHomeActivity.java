@@ -10,6 +10,8 @@ import android.view.WindowManager;
 import net.crfsol.justdrive.service.DetectionService;
 
 /**
+ * home activity that acts as the car home screen. This will display even when the display is locked.
+ *
  * @author Christopher Fagiani
  */
 public class CarHomeActivity extends Activity {

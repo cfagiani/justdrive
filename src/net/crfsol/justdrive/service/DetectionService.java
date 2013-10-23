@@ -21,7 +21,7 @@ import net.crfsol.justdrive.fragments.SettingsFragment;
 public class DetectionService extends Service implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
 
-    public static final int DETECTION_INTERVAL_MILLISECONDS = 1000 * 120;
+    public static final int DETECTION_INTERVAL_MILLISECONDS = 1000 * 60;
 
     private PendingIntent mActivityRecognitionPendingIntent;
 
