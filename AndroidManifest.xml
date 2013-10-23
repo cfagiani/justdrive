@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
     <application android:label="@string/app_name" android:icon="@drawable/car">
         <activity android:name=".CarHomeActivity"
-                  android:label="@string/app_name">
+                  android:label="@string/app_name" android:theme="@android:style/Theme.Black.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -19,10 +19,10 @@
                 <category android:name="android.intent.category.CAR_MODE"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
-            <meta-data android:name="android.dock_home" android:value="true" />
-            <meta-data android:name="android.dock_car" android:value="true" />
+            <meta-data android:name="android.dock_home" android:value="true"/>
+            <meta-data android:name="android.dock_car" android:value="true"/>
         </activity>
-        <activity android:name=".SettingsActivity"/>
+        <activity android:name=".SettingsActivity" android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <service
                 android:name=".service.ActivityRecognitionIntentService"
                 android:label="@string/recognition_service_name"

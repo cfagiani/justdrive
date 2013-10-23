@@ -4,19 +4,17 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:columnCount="2" android:rowCount="5">
-
-    <Button
+    <ImageButton
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/voice_action"
-            android:id="@+id/voiceaction" android:longClickable="false" android:onClick="launchVoiceAction"
-            />
-
+            android:id="@+id/imageButton" android:layout_row="3" android:layout_column="0"
+            android:src="@drawable/voice" android:onClick="launchVoiceAction"/>
     <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/settings_button"
             android:id="@+id/settings_button" android:onClick="launchSettings"
             android:layout_gravity="center"/>
+
 </GridLayout>
 
