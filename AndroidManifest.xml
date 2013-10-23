@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="net.crfsol.justdrive"
+          android:versionCode="1"
+          android:versionName="1.0">
+    <uses-sdk android:minSdkVersion="16"/>
+    <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+    <application android:label="@string/app_name" android:icon="@drawable/car">
+        <activity android:name=".CarHomeActivity"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.CAR_DOCK"/>
+                <category android:name="android.intent.category.CAR_MODE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <meta-data android:name="android.dock_home" android:value="true" />
+            <meta-data android:name="android.dock_car" android:value="true" />
+        </activity>
+        <activity android:name=".SettingsActivity"/>
+        <service
+                android:name=".service.ActivityRecognitionIntentService"
+                android:label="@string/recognition_service_name"
+                android:exported="true">
+        </service>
+        <service
+                android:name=".service.DetectionService"
+                android:label="@string/detection_service_name"
+                android:exported="false">
+        </service>
+
+    </application>
+</manifest>

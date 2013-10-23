@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:columnCount="2" android:rowCount="5">
+
+    <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/voice_action"
+            android:id="@+id/voiceaction" android:longClickable="false" android:onClick="launchVoiceAction"
+            />
+
+    <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_button"
+            android:id="@+id/settings_button" android:onClick="launchSettings"
+            android:layout_gravity="center"/>
+</GridLayout>
+
