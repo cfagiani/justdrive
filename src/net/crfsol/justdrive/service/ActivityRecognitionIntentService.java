@@ -40,9 +40,10 @@ public class ActivityRecognitionIntentService extends IntentService {
                     //GPS doesn't work reliably
                     //DeviceStateUtil.setGPSEnabled(this, true);
                 }
-                writeTogglePreference(true);
+                if (DeviceStateUtil.setBluetoothEnabled(true)) {
+                    writeTogglePreference(true);
+                }
                 writeCounterPreference(0);
-                DeviceStateUtil.setBluetoothEnabled(true);
 
                 //always reactivate car mode so the home screen returns to the forefront in the event that a prior voice action launched a new activity
                 //can't always enable without exiting navigation
@@ -71,9 +72,12 @@ public class ActivityRecognitionIntentService extends IntentService {
                 Log.d("Activity Recognition", "No action. Type was " + detectedActivity.getType() + " with conf of " + detectedActivity.getConfidence());
             }
 
-        } else {
+        } else
+
+        {
             Log.w("Activity Recognition", "No result from detection service");
         }
+
     }
 
 

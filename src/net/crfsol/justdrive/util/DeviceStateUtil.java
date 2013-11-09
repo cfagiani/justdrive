@@ -27,13 +27,22 @@ public class DeviceStateUtil {
     }
 
 
-    public static void setBluetoothEnabled(boolean enabled) {
+    /**
+     * enables/disables bluetooth. Will return true if the status was toggled, false if no change was made (due to adapter already being in requested state)
+     *
+     * @param enabled
+     * @return
+     */
+    public static boolean setBluetoothEnabled(boolean enabled) {
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (!enabled && bluetoothAdapter.isEnabled()) {
             bluetoothAdapter.disable();
+            return true;
         } else if (enabled && !bluetoothAdapter.isEnabled()) {
             bluetoothAdapter.enable();
+            return true;
         }
+        return false;
     }
 
     public static void setGPSEnabled(Context context, boolean enabled) {
