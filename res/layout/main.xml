@@ -3,18 +3,38 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:columnCount="2" android:rowCount="5">
+              android:columnCount="1" android:rowCount="6">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/voice_label"
+            android:id="@+id/textView2" android:layout_row="0" android:layout_column="0" android:paddingTop="10dip"
+            />
     <ImageButton
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton" android:layout_row="3" android:layout_column="0"
-            android:src="@drawable/voice" android:onClick="launchVoiceAction"/>
+            android:id="@+id/imageButton" android:layout_row="1" android:layout_column="0"
+            android:src="@drawable/microphone" android:onClick="launchVoiceAction"
+            android:paddingTop="50dip" android:paddingBottom="50dip" android:layout_gravity="center"
+            android:background="?android:selectableItemBackground" android:clickable="false"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/cancel_label"
+            android:id="@+id/textView" android:layout_row="3" android:layout_column="0" android:paddingTop="10dip"/>
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton2" android:layout_row="4" android:layout_column="0"
+            android:src="@drawable/cancel" android:onClick="deactivateCarMode" android:background="?android:selectableItemBackground"/>
     <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/settings_button"
             android:id="@+id/settings_button" android:onClick="launchSettings"
-            android:layout_gravity="center"/>
+            android:layout_gravity="bottom" android:layout_row="5" android:layout_column="0"/>
 
 </GridLayout>
 

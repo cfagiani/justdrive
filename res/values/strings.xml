@@ -102,7 +102,7 @@
   <string name="auth_client_play_services_err_notification_msg">Google Play services error</string>
 
   <!--  Requested by string saying which app requested the notification. [CHAR LIMIT=42] -->
-  <string name="auth_client_requested_by_msg">Requested by <xliff:g id="app_name">%1$s</xliff:g></string><string name="settings_button">Settings</string><string name="voice_action">Voice Action</string>
+  <string name="auth_client_requested_by_msg">Requested by <xliff:g id="app_name">%1$s</xliff:g></string><string name="settings_button">Settings</string><string name="voice_action">Voice Action</string><string name="cancel_label">Click to deactivate</string><string name="voice_label">Click for Voice Actions</string>
   <!-- End Auth client resources --><skip />
 
     <!-- Location client code resources (prefix with location_client) -->

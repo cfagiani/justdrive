@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.view.View;
 import android.view.WindowManager;
+import net.crfsol.justdrive.service.ActivityRecognitionIntentService;
 import net.crfsol.justdrive.service.DetectionService;
 
 /**
@@ -31,5 +32,11 @@ public class CarHomeActivity extends Activity {
 
     public void launchVoiceAction(View view) {
         startActivityForResult(new Intent(RecognizerIntent.ACTION_WEB_SEARCH), 999);
+    }
+
+    public void deactivateCarMode(View view) {
+        Intent terminateIntent = new Intent(this, ActivityRecognitionIntentService.class);
+        terminateIntent.putExtra(ActivityRecognitionIntentService.ACTION_EXTRA, ActivityRecognitionIntentService.TERMINATE_ACTION);
+        startService(terminateIntent);
     }
 }

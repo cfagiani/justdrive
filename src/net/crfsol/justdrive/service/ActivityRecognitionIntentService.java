@@ -13,11 +13,13 @@ import net.crfsol.justdrive.util.DeviceStateUtil;
  * @author Christopher Fagiani
  */
 public class ActivityRecognitionIntentService extends IntentService {
-    private static String THREAD_NAME = "recognitionThread";
-    private static String TOGGLE_KEY = "xxTOGGLExx";
-    private static String COUNT_KEY = "xxCOUNTxx";
-    private static int CONFIDENCE_THRESHOLD = 70;
-    private static int MIN_COUNT = 3;
+    public static final String ACTION_EXTRA = "action";
+    public static final String TERMINATE_ACTION = "terminate";
+    private static final String THREAD_NAME = "recognitionThread";
+    private static final String TOGGLE_KEY = "xxTOGGLExx";
+    private static final String COUNT_KEY = "xxCOUNTxx";
+    private static final int CONFIDENCE_THRESHOLD = 75;
+    private static final int MIN_COUNT = 4;
 
     public ActivityRecognitionIntentService() {
         super(THREAD_NAME);
@@ -27,7 +29,14 @@ public class ActivityRecognitionIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         // If the incoming intent contains an update
-        if (ActivityRecognitionResult.hasResult(intent)) {
+        if (intent.hasExtra(ACTION_EXTRA)) {
+            if (TERMINATE_ACTION.equals(intent.getStringExtra(ACTION_EXTRA))) {
+                deactivateCarMode();
+            } else {
+                Log.w("Activity Recognition", ACTION_EXTRA + " had unknown action: " + intent.getStringExtra(ACTION_EXTRA));
+            }
+
+        } else if (ActivityRecognitionResult.hasResult(intent)) {
             // Get the update
             ActivityRecognitionResult result =
                     ActivityRecognitionResult.extractResult(intent);
@@ -57,12 +66,7 @@ public class ActivityRecognitionIntentService extends IntentService {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     if (prefs.getBoolean(TOGGLE_KEY, false)) {
                         if (prefs.getInt(COUNT_KEY, 0) > MIN_COUNT) {
-                            //GPS doesn't work reliably
-                            //DeviceStateUtil.setGPSEnabled(this, false);
-                            DeviceStateUtil.setBluetoothEnabled(false);
-                            DeviceStateUtil.setCarModeEnabled(this, false, false);
-                            writeTogglePreference(false);
-                            writeCounterPreference(0);
+                            deactivateCarMode();
                         } else {
                             writeCounterPreference(prefs.getInt(COUNT_KEY, 0) + 1);
                         }
@@ -72,12 +76,21 @@ public class ActivityRecognitionIntentService extends IntentService {
                 Log.d("Activity Recognition", "No action. Type was " + detectedActivity.getType() + " with conf of " + detectedActivity.getConfidence());
             }
 
-        } else
-
-        {
-            Log.w("Activity Recognition", "No result from detection service");
+        } else {
+            Log.w("Activity Recognition", "Unclear intent");
         }
+    }
 
+    /**
+     * turn off the things we turned on for car mode
+     */
+    private void deactivateCarMode() {
+        //GPS doesn't work reliably
+        //DeviceStateUtil.setGPSEnabled(this, false);
+        DeviceStateUtil.setBluetoothEnabled(false);
+        DeviceStateUtil.setCarModeEnabled(this, false, false);
+        writeTogglePreference(false);
+        writeCounterPreference(0);
     }
 
 
