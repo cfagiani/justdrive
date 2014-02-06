@@ -39,4 +39,10 @@ public class CarHomeActivity extends Activity {
         terminateIntent.putExtra(ActivityRecognitionIntentService.ACTION_EXTRA, ActivityRecognitionIntentService.TERMINATE_ACTION);
         startService(terminateIntent);
     }
+
+    public void temporarySuspend(View view) {
+        Intent suspendIntent = new Intent(this, ActivityRecognitionIntentService.class);
+        suspendIntent.putExtra(ActivityRecognitionIntentService.ACTION_EXTRA, ActivityRecognitionIntentService.SUSPEND_ACTION);
+        startService(suspendIntent);
+    }
 }
